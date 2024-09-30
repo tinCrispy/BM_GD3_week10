@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class RaycastShoot : MonoBehaviour
+public class ShootWithRaycast : MonoBehaviour
 {
     public int damage = 1;
     public float fireRate = 0.2f;
@@ -16,8 +16,6 @@ public class RaycastShoot : MonoBehaviour
     private AudioSource gunAudio;
     private LineRenderer laserLine;
     private float nextFire;
-
-    
 
 
     // Start is called before the first frame update
@@ -36,37 +34,24 @@ public class RaycastShoot : MonoBehaviour
 
             nextFire = Time.time + fireRate;
             StartCoroutine(ShotEffect());
-
-            Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
-
-            RaycastHit hit;
-
-            laserLine.SetPosition(0, gunEnd.position);
-
-            if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
-            {
-
-                laserLine.SetPosition(1, hit.point);
-                ShootableBox health = hit.collider.GetComponent<ShootableBox>();
-
-                if (health != null)
-                {
-                    health.Damage(damage);
-                }
-
-                if (hit.rigidbody != null)
-                {
-                    hit.rigidbody.AddForce((hit.point - rayOrigin).normalized * hitForce, ForceMode.Impulse);
-                }
-            }
-
-            else
-            {
-                laserLine.SetPosition(1, fpsCam.transform.forward * weaponRange);
-            }
         }
 
-       
+        Vector3 rayOrigin = fpsCam.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0));
+
+        RaycastHit hit;
+
+        laserLine.SetPosition(0, gunEnd.position);
+
+        if (Physics.Raycast(rayOrigin, fpsCam.transform.forward, out hit, weaponRange))
+        {
+            ShootableBox health = hit.collider.GetComponent<ShootableBox>();
+            laserLine.SetPosition(1, hit.point);
+        }
+
+        else
+        {
+            laserLine.SetPosition(1, fpsCam.transform.forward * weaponRange);
+        }
 
     }
 
