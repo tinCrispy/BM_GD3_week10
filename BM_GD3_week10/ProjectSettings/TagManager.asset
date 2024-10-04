@@ -12,6 +12,7 @@ TagManager:
   - Mud
   - Tractor
   - Harvester
+  - PlantedMud
   layers:
   - Default
   - TransparentFX
