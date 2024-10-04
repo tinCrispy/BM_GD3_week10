@@ -9,6 +9,9 @@ TagManager:
   - GoodObject
   - Border
   - Projectile
+  - Mud
+  - Tractor
+  - Harvester
   layers:
   - Default
   - TransparentFX
